@@ -79,7 +79,7 @@ begin
    Randomize();
    i:= 1;
    azar_tentadores := Random(NUM_PAREJAS div 2) + 1;
-   azar_parejas := Random(NUM_PAREJAS) + 1;
+   azar_parejas := Random(NUM_PAREJAS + NUM_PAREJAS) + 1;
    while (azar_parejas > 0) or (azar_tentadores > 0) do
          begin
            if participantes[i]^.rol = pareja then
@@ -94,7 +94,10 @@ begin
                end;
            i += 1;
          end;
-    seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]^.otroParticipante;
+   if seleccion_aleatoria_tentacion[0]^.otroParticipante = nil then
+      seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]
+   else
+      seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]^.otroParticipante;
 end;
 
 {se forma una nueva pareja con el tentador}
@@ -102,14 +105,16 @@ procedure tentado(tentados: TADe3);
 begin
     if tentados[0] = nil then
        begin
-            tentados[1]^.otroParticipante^.otroParticipante:= nil;
+            if tentados[1]^.otroParticipante <> nil then
+              tentados[1]^.otroParticipante^.otroParticipante:= nil;
             tentados[1]^.otroParticipante := tentados[2];
             tentados[2]^.otroParticipante := tentados[1];
             WriteLn(tentados[1]^.nombre, ' cayo en la tentacion.');
        end
     else
         begin
-            tentados[0]^.otroParticipante^.otroParticipante:= nil;
+            if tentados[0]^.otroParticipante <> nil then
+              tentados[0]^.otroParticipante^.otroParticipante:= nil;
             tentados[0]^.otroParticipante := tentados[2];
             tentados[2]^.otroParticipante := tentados[0];
             WriteLn(tentados[0]^.nombre, ' cayo en la tentacion.');
