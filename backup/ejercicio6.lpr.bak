@@ -96,8 +96,6 @@ begin
          end;
    if seleccion_aleatoria_tentacion[0]^.otroParticipante = nil then
       seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]
-   else if   seleccion_aleatoria_tentacion[0]^.otroParticipante^.rol = tentador then
-      seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]
    else
       seleccion_aleatoria_tentacion[1] := seleccion_aleatoria_tentacion[0]^.otroParticipante;
 end;
